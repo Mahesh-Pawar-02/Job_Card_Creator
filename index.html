@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturing Job Card Creator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Company Header Table -->
+        <div class="company-header">
+            <table class="header-table">
+                <tr>
+                    <td class="logo-cell" rowspan="5">
+                        <div class="logo-placeholder">
+                            <i class="fas fa-industry"></i>
+                            <span>JYOTI</span>
+                        </div>
+                    </td>
+                    <td class="company-details" rowspan="4" align="center">
+                        <span class="company-name">JYOTI HEAT TREATMENT PVT LTD</span><br>
+                        Plot No. J-199, M.I.D.C, Bhosari, Pune-26<br>
+                        Email: sales@jyotiht.com<br>
+                        Mobile No.: 8888240351 / 8888140351
+                    </td>
+                    <td class="doc-label">Doc. No.</td>
+                    <td class="doc-value">JHTPL/QA/F/04</td>
+                </tr>
+                <tr>
+                    <td class="doc-label">Rev Date</td>
+                    <td class="doc-value">01.01.2023</td>
+                </tr>
+                <tr>
+                    <td class="doc-label">Rev No.</td>
+                    <td class="doc-value">00/-</td>
+                </tr>
+            </table>
+        </div>
+
+        <header class="header">
+            <h1><i class="fas fa-clipboard-list"></i> Manufacturing Job Card Creator</h1>
+            <p>Create and manage manufacturing process job cards</p>
+            <div class="header-actions">
+                <a href="dashboard.html" class="dashboard-link">
+                    <i class="fas fa-chart-line"></i>
+                    View Dashboard
+                </a>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>Create New Job Card</h2>
+                <form id="jobCardForm">
+                    <!-- Charge Number -->
+                    <div class="form-section-group">
+                        <h3>Job Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="chargeNo">Charge No</label>
+                                <input type="text" id="chargeNo" name="chargeNo" placeholder="e.g., 5.225/2.153">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parts Data -->
+                    <div class="form-section-group">
+                        <h3>Parts Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="jobDate">Job Date *</label>
+                                <input type="date" id="jobDate" name="jobDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerName">Customer Name *</label>
+                                <input type="text" id="customerName" name="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sqfNo">SQF No</label>
+                                <input type="text" id="sqfNo" name="sqfNo" placeholder="e.g., 05">
+                            </div>
+                        </div>
+                        
+                        <div id="partsContainer">
+                            <div class="part-entry">
+                                <h4>Part 1</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="partName1">Part Name/No *</label>
+                                        <input type="text" id="partName1" name="partName1" placeholder="e.g., Sprocket B04082L" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="weight1">Weight (KGS)</label>
+                                        <input type="number" id="weight1" name="weight1" step="0.001" placeholder="e.g., 3.142">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="quantity1">Quantity</label>
+                                        <input type="text" id="quantity1" name="quantity1" placeholder="e.g., 56 NOS">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalWeight1">Total Weight (KGS)</label>
+                                        <input type="number" id="totalWeight1" name="totalWeight1" step="0.001" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addPartEntry()">
+                            <i class="fas fa-plus"></i> Add Another Part
+                        </button>
+                    </div>
+
+                    <!-- Incoming Inspection -->
+                    <div class="form-section-group">
+                        <h3>Incoming Inspection</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="incomingOperator">Operator Signature</label>
+                                <input type="text" id="incomingOperator" name="incomingOperator" placeholder="e.g., Shivkumar">
+                            </div>
+                        </div>
+                        
+                        <div class="inspection-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Process Parameter</th>
+                                        <th>Applicable Process</th>
+                                        <th>If Done</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1) Visual Inspection<br>a) Dent & Damage<br>b) Free from rust, scaling</td>
+                                        <td>
+                                            <label><input type="radio" name="visual1a" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="visual1a" value="No"> No</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="visual1aDone" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="visual1aDone" value="No"> No</label>
+                                        </td>
+                                        <td><input type="text" name="visual1aRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2) Punching</td>
+                                        <td>
+                                            <label><input type="radio" name="punching" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="punching" value="No"> No</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="punchingDone" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="punchingDone" value="No"> No</label>
+                                        </td>
+                                        <td><input type="text" name="punchingRemarks" placeholder="e.g., GCG35-8"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3) Pasting</td>
+                                        <td>
+                                            <label><input type="radio" name="pasting" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="pasting" value="No"> No</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="pastingDone" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="pastingDone" value="No"> No</label>
+                                        </td>
+                                        <td><input type="text" name="pastingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4) Fixture Inspection</td>
+                                        <td>
+                                            <label><input type="radio" name="fixture" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="fixture" value="No"> No</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="fixtureDone" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="fixtureDone" value="No"> No</label>
+                                        </td>
+                                        <td><input type="text" name="fixtureRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5) Cut Piece</td>
+                                        <td>
+                                            <label><input type="radio" name="cutPiece" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="cutPiece" value="No"> No</label>
+                                        </td>
+                                        <td>
+                                            <label><input type="radio" name="cutPieceDone" value="Yes"> Yes</label>
+                                            <label><input type="radio" name="cutPieceDone" value="No"> No</label>
+                                        </td>
+                                        <td><input type="text" name="cutPieceRemarks" placeholder="e.g., B93620K"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Heat Treatment Process -->
+                    <div class="form-section-group">
+                        <h3>Heat Treatment Process</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="heatTreatmentOperator">Operator Signature</label>
+                                <input type="text" id="heatTreatmentOperator" name="heatTreatmentOperator" placeholder="e.g., Mahendra">
+                            </div>
+                        </div>
+                        
+                        <div class="process-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Process Parameter</th>
+                                        <th>IN</th>
+                                        <th>OUT</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1) Charge Preparation</td>
+                                        <td><input type="time" name="chargePrepIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="chargePrepOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="chargePrepRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2) Pre Washing</td>
+                                        <td><input type="time" name="preWashingIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="preWashingOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="preWashingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3) Pre Heating</td>
+                                        <td><input type="time" name="preHeatingIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="preHeatingOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="preHeatingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4) CHT</td>
+                                        <td><input type="time" name="chtIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="chtOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="chtRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5) Post Washing</td>
+                                        <td><input type="time" name="postWashingIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="postWashingOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="postWashingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6) As Quench Hardness</td>
+                                        <td><input type="text" name="hardnessIn" placeholder="e.g., 160°C"></td>
+                                        <td><input type="text" name="hardnessOut" placeholder="e.g., 02HTS"></td>
+                                        <td><input type="text" name="hardnessRemarks" placeholder="e.g., 63, 63, 63, 63, 63.5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7) Tempering</td>
+                                        <td><input type="time" name="temperingIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="temperingOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="temperingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8) Shot Blasting (if required)</td>
+                                        <td><input type="time" name="shotBlastingIn" placeholder="HH:MM"></td>
+                                        <td><input type="time" name="shotBlastingOut" placeholder="HH:MM"></td>
+                                        <td><input type="text" name="shotBlastingRemarks" placeholder="Remarks"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Final Inspection -->
+                    <div class="form-section-group">
+                        <h3>Final Inspection</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="finalInspectionOperator">Operator Signature</label>
+                                <input type="text" id="finalInspectionOperator" name="finalInspectionOperator" placeholder="Operator name">
+                            </div>
+                        </div>
+                        
+                        <div class="inspection-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Specified</th>
+                                        <th>Actual</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1) Surface Hardness</td>
+                                        <td><input type="text" name="surfaceHardnessSpec" placeholder="e.g., 58-64 HRC"></td>
+                                        <td><input type="text" name="surfaceHardnessActual" placeholder="e.g., 62-63 HRC"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2) Core Hardness</td>
+                                        <td><input type="text" name="coreHardnessSpec" placeholder="e.g., 25-38 HRC"></td>
+                                        <td><input type="text" name="coreHardnessActual" placeholder="e.g., 31 HRC"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3) Case Depth</td>
+                                        <td><input type="text" name="caseDepthSpec" placeholder="e.g., 0.70 mm Min."></td>
+                                        <td><input type="text" name="caseDepthActual" placeholder="e.g., 1.73 mm @PCD"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Quality Management -->
+                    <div class="form-section-group">
+                        <h3>Quality Management</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="remarks">Remarks</label>
+                                <input type="text" id="remarks" name="remarks" placeholder="e.g., OK">
+                            </div>
+                            <div class="form-group">
+                                <label for="qmSignature">Q.M. Signature</label>
+                                <input type="text" id="qmSignature" name="qmSignature" placeholder="Quality Manager name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Create Job Card
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="clearForm()">
+                            <i class="fas fa-eraser"></i> Clear Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <h2>Job Card Preview</h2>
+                <div id="jobCardPreview" class="job-card-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-eye"></i>
+                        <p>Your job card preview will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="job-cards-section">
+            <h2>Created Job Cards</h2>
+            <div id="jobCardsList" class="job-cards-list">
+                <div class="empty-state">
+                    <i class="fas fa-folder-open"></i>
+                    <p>No job cards created yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

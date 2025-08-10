@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturing Dashboard - JYOTI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Company Header -->
+    <div class="company-header">
+        <table class="header-table">
+            <tr>
+                <td class="logo-cell" rowspan="5">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-industry"></i>
+                        <span>JYOTI</span>
+                    </div>
+                </td>
+                <td class="company-details" rowspan="4" align="center">
+                    <span class="company-name">JYOTI HEAT TREATMENT PVT LTD</span><br>
+                    Plot No. J-199, M.I.D.C, Bhosari, Pune-26<br>
+                    Email: sales@jyotiht.com<br>
+                    Mobile No.: 8888240351 / 8888140351
+                </td>
+                <td class="doc-label">Doc. No.</td>
+                <td class="doc-value">JHTPL/QA/F/04</td>
+            </tr>
+            <tr>
+                <td class="doc-label">Rev Date</td>
+                <td class="doc-value">01.01.2023</td>
+            </tr>
+            <tr>
+                <td class="doc-label">Rev No.</td>
+                <td class="doc-value">00/-</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Manufacturing Dashboard</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-plus-circle"></i>
+                    New Job Card
+                </a>
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-link" onclick="exportAllData()">
+                    <i class="fas fa-download"></i>
+                    Export All
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Quick Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="totalJobCards">0</h3>
+                    <p>Total Job Cards</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="pendingJobs">0</h3>
+                    <p>Pending Jobs</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="completedJobs">0</h3>
+                    <p>Completed Jobs</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-weight-hanging"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="totalWeight">0</h3>
+                    <p>Total Weight (KGS)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container monthly-chart">
+                <h3>Job Cards by Month</h3>
+                <canvas id="monthlyChart"></canvas>
+            </div>
+                                    <div class="chart-container customer-chart">
+                            <h3>Customer Distribution</h3>
+                            <canvas id="customerChart"></canvas>
+                        </div>
+        </div>
+
+        <!-- Work Sections -->
+        <div class="work-sections">
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-tools"></i> Heat Treatment Jobs</h3>
+                    <span class="section-count" id="heatTreatmentCount">0</span>
+                </div>
+                <div class="section-content" id="heatTreatmentJobs">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-search"></i> Inspection Jobs</h3>
+                    <span class="section-count" id="inspectionCount">0</span>
+                </div>
+                <div class="section-content" id="inspectionJobs">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-header">
+                    <h3><i class="fas fa-thermometer-half"></i> Quality Control</h3>
+                    <span class="section-count" id="qualityCount">0</span>
+                </div>
+                <div class="section-content" id="qualityJobs">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Job Cards -->
+        <div class="recent-jobs">
+            <div class="section-header">
+                <h3><i class="fas fa-history"></i> Recent Job Cards</h3>
+                <a href="index.html" class="view-all-btn">View All</a>
+            </div>
+            <div class="jobs-table-container">
+                <table class="jobs-table" id="recentJobsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Charge No</th>
+                            <th>Parts</th>
+                            <th>Weight (KGS)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentJobsBody">
+                        <!-- Dynamic content will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+            <div class="actions-grid">
+                <button class="action-btn" onclick="window.location.href='index.html'">
+                    <i class="fas fa-plus"></i>
+                    Create New Job Card
+                </button>
+                <button class="action-btn" onclick="exportAllData()">
+                    <i class="fas fa-file-export"></i>
+                    Export All Data
+                </button>
+                <button class="action-btn" onclick="clearAllData()">
+                    <i class="fas fa-trash"></i>
+                    Clear All Data
+                </button>
+                <button class="action-btn" onclick="refreshDashboard()">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
